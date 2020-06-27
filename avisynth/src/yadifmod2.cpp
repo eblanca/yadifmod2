@@ -29,12 +29,14 @@
 #include <cstdint>
 #include <algorithm>
 #include <stdexcept>
+#ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
 #define VC_EXTRALEAN
 #define NOMINMAX
 #define NOGDI
 #include <windows.h>
 #include <avisynth.h>
+#endif
 
 #include "common.h"
 
@@ -280,7 +282,6 @@ create_yadifmod2(AVSValue args, void* user_data, IScriptEnvironment* env)
         }
 
         arch_t arch = get_arch(args[5].AsInt(-1), env);
-        validate(args[5].AsInt() < 0 || args[5].AsInt() > 4, "opt must be between 0..4.");
 
         return new YadifMod2(child, edeint, order, field, mode, arch, env);
 
@@ -291,7 +292,10 @@ create_yadifmod2(AVSValue args, void* user_data, IScriptEnvironment* env)
 }
 
 
-static const AVS_Linkage* AVS_linkage = nullptr;
+#ifdef _WIN32
+static
+#endif
+const AVS_Linkage* AVS_linkage = nullptr;
 
 
 extern "C" __declspec(dllexport) const char* __stdcall

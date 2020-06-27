@@ -2,6 +2,9 @@
 #define YADIF_MOD2_COMMON_H
 
 #include <cstdint>
+#ifndef _WIN32
+#include <avisynth/avisynth.h>
+#endif
 
 #define __AVX__
 
